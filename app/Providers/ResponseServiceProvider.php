@@ -56,12 +56,12 @@ class ResponseServiceProvider extends ServiceProvider
             ], $code);
         });
 
-        Response::macro('error', function (array $errors, array $meta = null, int $code = JsonResponse::HTTP_INTERNAL_SERVER_ERROR) {
+        Response::macro('error', function (string $error, int $code = JsonResponse::HTTP_INTERNAL_SERVER_ERROR) {
             return Response::json([
                 'success' => false,
                 'data' => null,
-                'errors' => $errors,
-                'meta' => $meta
+                'errors' => ['message' => $error],
+                'meta' => null
             ], $code);
         });
     }

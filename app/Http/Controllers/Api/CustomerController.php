@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Factories\CustomerFactory;
 use App\Http\Requests\CustomerRequest;
-use App\Repositories\CustomerRepository;
+use App\Interfaces\Repositories\CustomerBalanceRepositoryInterface;
+use App\Interfaces\Repositories\CustomerRepositoryInterface;
+use DB;
+use Exception;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 /**
  * Class CustomerController
@@ -12,11 +15,18 @@ use App\Repositories\CustomerRepository;
  */
 class CustomerController
 {
+    /** @var CustomerRepositoryInterface $customerRepository */
     protected $customerRepository;
 
-    public function __construct()
+    /**
+     * CustomerController constructor.
+     * @param CustomerRepositoryInterface $customerRepository
+     */
+    public function __construct(
+        CustomerRepositoryInterface $customerRepository
+    )
     {
-
+        $this->customerRepository = $customerRepository;
     }
 
     public function index()
@@ -24,9 +34,22 @@ class CustomerController
         return response()->success(['user'=>1]);
     }
 
-    public function create(CustomerRequest $request, CustomerRepository $customerRepository)
+    /**
+     * @param CustomerRequest $request
+     * @param CustomerBalanceRepositoryInterface $customerBalanceRepository
+     * @return JsonResponse
+     */
+    public function create(CustomerRequest $request, CustomerBalanceRepositoryInterface $customerBalanceRepository) : JsonResponse
     {
-        $customer = $customerRepository->create($request->request->all());
-        return response()->success($customer);
+        try {
+            DB::beginTransaction();
+            $customer = $this->customerRepository->create($request->request->all());
+            $customerBalanceRepository->create($customer);
+            DB::commit();
+            return response()->created($customer);
+        } catch (Exception $e) {
+            DB::rollBack();
+            return response()->error($e->getMessage());
+        }
     }
 }

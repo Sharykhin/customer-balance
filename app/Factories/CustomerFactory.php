@@ -31,5 +31,6 @@ class CustomerFactory implements CustomerFactoryInterface
         $customerBalance = new CustomerBalance();
         $customerBalance->balance = 0;
         $customerBalance->bonus = 0;
+        return $customerBalance;
     }
 }

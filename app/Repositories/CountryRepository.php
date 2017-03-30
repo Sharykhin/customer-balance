@@ -14,7 +14,9 @@ class CountryRepository implements CountryRepositoryInterface
 {
     protected $countryFactory;
 
-    public function __construct(CountryFactory $countryFactory)
+    public function __construct(
+        CountryFactory $countryFactory
+    )
     {
         $this->countryFactory = $countryFactory;
     }
