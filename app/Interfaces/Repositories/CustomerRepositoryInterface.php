@@ -15,10 +15,4 @@ interface CustomerRepositoryInterface
      * @return Customer
      */
     public function create(array $parameters) : Customer;
-
-    /**
-     * @param Customer $customer
-     * @return Customer
-     */
-    public function save(Customer $customer) : Customer;
 }

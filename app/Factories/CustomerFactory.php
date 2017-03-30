@@ -20,14 +20,16 @@ class CustomerFactory implements CustomerFactoryInterface
     {
         $customer = new Customer();
         $customer->bonus = rand(config('customer.bonus.min'), config('customer.bonus.max'));
+        return $customer;
+    }
 
+    /**
+     * @return CustomerBalance
+     */
+    public function newCustomerBalance() : CustomerBalance
+    {
         $customerBalance = new CustomerBalance();
         $customerBalance->balance = 0;
         $customerBalance->bonus = 0;
-        $customerBalance->customer()->associate($customer);
-
-//        $customer->balance = $customerBalance;
-
-        return $customer;
     }
 }

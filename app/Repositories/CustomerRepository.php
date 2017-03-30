@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Interfaces\Factories\CustomerFactoryInterface;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
 use App\Models\Customer;
+use Exception;
+use DB;
 
 /**
  * Class CustomerRepository
@@ -29,26 +31,25 @@ class CustomerRepository implements CustomerRepositoryInterface
     /**
      * @param array $parameters
      * @return Customer
+     * @throws Exception
      */
     public function create(array $parameters) : Customer
     {
         $customer = $this->customerFactory->newCustomer();
-        unset($parameters['country']);
-
+        $customerBalance = $this->customerFactory->newCustomerBalance();
+        $customerBalance->customer()->associate($customer);
 
         $customer->fill($parameters);
-        $customer->save();
-        $customer->balance()->save($customer->getBalance());
-        return $customer;
-    }
+        try {
+            DB::beginTransaction();
+            $customer->save();
+            $customer->balance()->save($customerBalance);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw new Exception($e->getMessage(), $e->getCode(), $e);
+        }
 
-    /**
-     * @param Customer $customer
-     * @return Customer
-     */
-    public function save(Customer $customer) : Customer
-    {
-        $customer->save();
         return $customer;
     }
 }
