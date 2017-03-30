@@ -2,6 +2,7 @@
 
 namespace App\Factories;
 
+use App\Interfaces\Factories\CustomerFactoryInterface;
 use App\Models\Customer;
 use App\Models\CustomerBalance;
 
@@ -9,8 +10,12 @@ use App\Models\CustomerBalance;
  * Class CustomerFactory
  * @package App\Factories
  */
-class CustomerFactory
+class CustomerFactory implements CustomerFactoryInterface
 {
+    /**
+     * @return Customer
+     *
+     */
     public function newCustomer() : Customer
     {
         $customer = new Customer();
@@ -20,6 +25,8 @@ class CustomerFactory
         $customerBalance->balance = 0;
         $customerBalance->bonus = 0;
         $customerBalance->customer()->associate($customer);
+
+//        $customer->balance = $customerBalance;
 
         return $customer;
     }
