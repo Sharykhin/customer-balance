@@ -13,3 +13,4 @@ use Illuminate\Http\Request;
 |
 */
 Route::get('/customers', 'CustomerController@index');
+Route::post('/customers', 'CustomerController@create');
