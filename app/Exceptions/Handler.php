@@ -48,7 +48,7 @@ class Handler extends ExceptionHandler
         switch ($exception) {
             case ($exception instanceof ModelNotFoundException):
             {
-                return response()->notFound('Resource could not be found');
+                return response()->notFound($exception->getMessage());
             }
             default:
                 return parent::render($request, $exception);

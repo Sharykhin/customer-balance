@@ -2,7 +2,7 @@
 
 namespace App\Repositories;
 
-use App\Factories\CountryFactory;
+use App\Interfaces\Factories\CountryFactoryInterface;
 use App\Interfaces\Repositories\CountryRepositoryInterface;
 use App\Models\Country;
 
@@ -12,22 +12,18 @@ use App\Models\Country;
  */
 class CountryRepository implements CountryRepositoryInterface
 {
+    /** @var CountryFactoryInterface $countryFactory */
     protected $countryFactory;
 
+    /**
+     * CountryRepository constructor.
+     * @param CountryFactoryInterface $countryFactory
+     */
     public function __construct(
-        CountryFactory $countryFactory
+        CountryFactoryInterface $countryFactory
     )
     {
         $this->countryFactory = $countryFactory;
-    }
-
-    /**
-     * @param $id
-     * @return Country
-     */
-    public function getById($id)
-    {
-        return Country::find($id);
     }
 
     /**
@@ -37,13 +33,17 @@ class CountryRepository implements CountryRepositoryInterface
     public function create(array $parameters) : Country
     {
         $country = $this->countryFactory->newCountry();
-        $country->fill($parameters);
+        $country->fill(['code' => $parameters['country']]);
         $country->save();
         return $country;
     }
 
+    /**
+     * @param string $code
+     * @return mixed
+     */
     public function getByCode(string $code)
     {
-        return Country::where('code','=', $code)->get()->first();
+        return Country::where('code','=', $code)->first();
     }
 }

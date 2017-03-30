@@ -7,6 +7,10 @@ use App\Interfaces\Repositories\CustomerBalanceRepositoryInterface;
 use App\Models\Customer;
 use App\Models\CustomerBalance;
 
+/**
+ * Class CustomerBalanceRepository
+ * @package App\Repositories
+ */
 class CustomerBalanceRepository implements CustomerBalanceRepositoryInterface
 {
     /** @var CustomerFactoryInterface $customerFactory */

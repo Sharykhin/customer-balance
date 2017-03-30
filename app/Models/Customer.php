@@ -17,7 +17,7 @@ class Customer extends Model
     protected $fillable = ['gender', 'first_name', 'last_name', 'country_id', 'email', 'bonus'];
 
     /** @var array $hidden  - array of fields that should be excluded from the output */
-    protected $hidden = ['bonus'];
+    protected $hidden = ['country_id'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -32,6 +32,6 @@ class Customer extends Model
      */
     public function country()
     {
-        return $this->hasOne(Country::class);
+        return $this->belongsTo(Country::class);
     }
 }

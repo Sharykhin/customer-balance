@@ -36,6 +36,14 @@ class CustomerRequest extends FormRequest
                     'gender' => 'required|string|in:female,male|max:10',
                     'country' => 'required|string|max:3'
                 ];
+            case 'PATCH':
+                return [
+                    'email'    => 'sometimes|email|unique:customers,email,'.$this->get('id').'|max:255',
+                    'first_name' => 'string|max:50',
+                    'last_name' => 'sometimes|string|max:50',
+                    'gender' => 'sometimes|string|in:female,male|max:10',
+                    'country' => 'sometimes|string|max:3'
+                ];
         }
     }
 

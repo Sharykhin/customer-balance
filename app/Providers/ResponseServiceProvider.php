@@ -38,7 +38,11 @@ class ResponseServiceProvider extends ServiceProvider
             ], $code);
         });
 
-        Response::macro('notFound', function (string $message = null, int $code = JsonResponse::HTTP_NOT_FOUND) {
+        Response::macro('successRemove', function (int $code = JsonResponse::HTTP_NO_CONTENT) {
+            return Response::json(null, $code);
+        });
+
+        Response::macro('notFound', function (string $message = 'Resource could not be found', int $code = JsonResponse::HTTP_NOT_FOUND) {
             return Response::json([
                 'success' => false,
                 'data' => null,

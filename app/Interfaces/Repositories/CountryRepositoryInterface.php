@@ -10,5 +10,15 @@ use App\Models\Country;
  */
 interface CountryRepositoryInterface
 {
-    public function getById($id);
+    /**
+     * @param string $code
+     * @return Country|null
+     */
+    public function getByCode(string $code);
+
+    /**
+     * @param array $parameters
+     * @return Country
+     */
+    public function create(array $parameters) : Country;
 }
