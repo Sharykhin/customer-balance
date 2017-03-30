@@ -2,6 +2,8 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\CheckAcceptHeader;
+use App\Http\Middleware\CheckContentTypeHeader;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -29,6 +31,11 @@ class Kernel extends HttpKernel
         'api' => [
             'throttle:60,1',
             'bindings',
+            CheckAcceptHeader::class,
+            CheckContentTypeHeader::class
+        ],
+        'debug' => [
+            \App\Http\Middleware\ProfileJsonResponse::class
         ],
     ];
 
