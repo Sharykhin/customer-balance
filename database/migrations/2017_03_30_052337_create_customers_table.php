@@ -21,9 +21,9 @@ class CreateCustomersTable extends Migration
             $table->string('gender', 10);
             $table->string('first_name', 50);
             $table->string('last_name', 50);
-            $table->integer('country_id')->unsigned();
             $table->string('email')->unuqie();
             $table->integer('bonus');
+            $table->string('country', 2);
             $table->timestamps();
             $table->softDeletes();
         });

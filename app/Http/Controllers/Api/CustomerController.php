@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Requests\CustomerRequest;
-use App\Interfaces\Repositories\CountryRepositoryInterface;
 use App\Interfaces\Repositories\CustomerBalanceRepositoryInterface;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
-use App\Models\Country;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -19,6 +17,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CustomerController
 {
     const LIMIT = 10;
+
     /** @var CustomerRepositoryInterface $customerRepository */
     protected $customerRepository;
 
@@ -43,13 +42,9 @@ class CustomerController
         $offset = (int) $request->query->get('offset') ?: 0;
 
         $customers = $this->customerRepository->all($limit, $offset);
-        $count = $this->customerRepository->count();
-        return response()->success($customers, [
-            'total' => $count,
-            'count' => sizeof($customers),
-            'limit' => $limit,
-            'offset' => $offset
-        ]);
+        $total = $this->customerRepository->count();
+        $count = sizeof($customers);
+        return response()->success($customers, compact('total', 'count', 'limit', 'offset'));
     }
 
     /**
@@ -65,26 +60,19 @@ class CustomerController
     /**
      * @param CustomerRequest $request
      * @param CustomerBalanceRepositoryInterface $customerBalanceRepository
-     * @param CountryRepositoryInterface $countryRepository
      * @return JsonResponse
      */
     public function create(
         CustomerRequest $request,
-        CustomerBalanceRepositoryInterface $customerBalanceRepository,
-        CountryRepositoryInterface $countryRepository
+        CustomerBalanceRepositoryInterface $customerBalanceRepository
     ) : JsonResponse
     {
         try {
             DB::beginTransaction();
-            $country = $countryRepository->getByCode($request->request->get('country'));
-            if (!$country instanceof Country) {
-                $country = $countryRepository->create($request->only('country'));
-            }
-            $parameters = $request->except('country') + ['country_id' => $country->id];
+            $parameters = $request->request->all();
             $customer = $this->customerRepository->create($parameters);
             $customerBalanceRepository->create($customer);
             DB::commit();
-            $customer->country = $country;
             return response()->created($customer);
         } catch (Exception $e) {
             DB::rollBack();
@@ -95,28 +83,13 @@ class CustomerController
     /**
      * @param $id
      * @param CustomerRequest $request
-     * @param CountryRepositoryInterface $countryRepository
      * @return JsonResponse
      */
-    public function update(
-        $id,
-        CustomerRequest $request,
-        CountryRepositoryInterface $countryRepository
-    ) : JsonResponse
+    public function update($id, CustomerRequest $request) : JsonResponse
     {
         $customer = $this->customerRepository->get($id);
         $parameters = $request->except('bonus');
-        $country = null;
-        if ($request->request->has('country')) {
-            $country = $countryRepository->getByCode($request->request->get('country'));
-            if (!$country instanceof Country) {
-                $country = $countryRepository->create($request->only('country'));
-            }
-            $parameters['country_id'] = $country->id;
-        }
-
         $customer = $this->customerRepository->update($customer, $parameters);
-        $customer['country'] = !is_null($country) ?: $customer['country'];
         return response()->success($customer);
     }
 

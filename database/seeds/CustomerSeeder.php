@@ -3,6 +3,9 @@
 use Illuminate\Database\Seeder;
 use DateTime;
 
+/**
+ * Class CustomerSeeder
+ */
 class CustomerSeeder extends Seeder
 {
     /**
@@ -18,7 +21,8 @@ class CustomerSeeder extends Seeder
                 'first_name' => 'Cameron',
                 'last_name' => 'Diaz',
                 'gender' => 'female',
-                'bonus' => '5',
+                'bonus' => 5,
+                'country' => 'US',
                 'created_at' => (new DateTime())->format(DateTime::ISO8601)
             ),
             array(
@@ -26,7 +30,8 @@ class CustomerSeeder extends Seeder
                 'first_name' => 'Brad',
                 'last_name' => 'Pit',
                 'gender' => 'male',
-                'bonus' => '10',
+                'bonus' => 10,
+                'country' => 'US',
                 'created_at' => (new DateTime())->format(DateTime::ISO8601)
             ),
         );

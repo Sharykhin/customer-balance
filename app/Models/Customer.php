@@ -14,10 +14,7 @@ class Customer extends Model
     use SoftDeletes;
 
     /** @var array $fillable */
-    protected $fillable = ['gender', 'first_name', 'last_name', 'country_id', 'email', 'bonus'];
-
-    /** @var array $hidden  - array of fields that should be excluded from the output */
-    protected $hidden = ['country_id'];
+    protected $fillable = ['gender', 'first_name', 'last_name', 'country', 'email', 'bonus'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
@@ -25,13 +22,5 @@ class Customer extends Model
     public function balance()
     {
         return $this->hasOne(CustomerBalance::class);
-    }
-
-    /**
-     * @return \Illuminate\Database\Eloquent\Relations\HasOne
-     */
-    public function country()
-    {
-        return $this->belongsTo(Country::class);
     }
 }

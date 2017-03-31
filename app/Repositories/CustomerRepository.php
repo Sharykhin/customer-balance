@@ -51,7 +51,7 @@ class CustomerRepository implements CustomerRepositoryInterface
      */
     public function get($id) : Customer
     {
-        $customer = Customer::with('country')->find($id);
+        $customer = Customer::find($id);
         if (!$customer instanceof Customer) {
             throw new ModelNotFoundException('Customer could not be found');
         }
