@@ -13,8 +13,15 @@ interface TransactionRepositoryInterface
 {
     /**
      * @param Customer $customer
-     * @param int $amount
+     * @param float $amount
      * @return Transaction
      */
-    public function createDeposit(Customer $customer, int $amount) : Transaction;
+    public function createDepositOperation(Customer $customer, float $amount) : Transaction;
+
+    /**
+     * @param Customer $customer
+     * @param float $amount
+     * @return Transaction
+     */
+    public function createWithdrawalOperation(Customer $customer, float $amount) : Transaction;
 }
