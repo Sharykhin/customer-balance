@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Requests\TransactionRequest;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
 use App\Interfaces\Repositories\TransactionRepositoryInterface;
 use Illuminate\Http\JsonResponse;
 
 /**
- * Class BalanceOperationController
+ * Class TransactionController
  * @package App\Http\Controllers\Api
  */
-class BalanceOperationController
+class TransactionController
 {
     /** @var CustomerRepositoryInterface $customerRepository */
     protected $customerRepository;
@@ -19,7 +20,7 @@ class BalanceOperationController
     protected $transactionRepository;
 
     /**
-     * BalanceOperationController constructor.
+     * TransactionController constructor.
      * @param CustomerRepositoryInterface $customerRepository
      * @param TransactionRepositoryInterface $transactionRepository
      */
@@ -32,12 +33,28 @@ class BalanceOperationController
         $this->transactionRepository = $transactionRepository;
     }
 
-
-    public function deposit($id) : JsonResponse
+    /**
+     * @param TransactionRequest $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function deposit(TransactionRequest $request, $id) : JsonResponse
     {
         $customer = $this->customerRepository->get($id);
 
-        $this->transactionRepository->createDeposit($customer, 10);
+        $this->transactionRepository->createDepositOperation($customer, floatval($request->request->get('amount')));
+    }
+
+    /**
+     * @param TransactionRequest $request
+     * @param $id
+     * @return JsonResponse
+     */
+    public function withdraw(TransactionRequest $request, $id) : JsonResponse
+    {
+        $customer = $this->customerRepository->get($id);
+
+        $this->transactionRepository->createWithdrawal($customer, floatval($request->request->get('amount')));
     }
 
 }

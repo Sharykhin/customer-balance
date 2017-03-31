@@ -13,9 +13,19 @@ use DB;
  */
 class TransactionRepository implements TransactionRepositoryInterface
 {
-    public function createDeposit(Customer $customer, int $amount) : Transaction
+    /**
+     * @param Customer $customer
+     * @param float $amount
+     * @return Transaction
+     */
+    public function createDepositOperation(Customer $customer, float $amount) : Transaction
     {
         $result = DB::select("CALL make_transaction(" . $amount . ", 'USD', 'deposit', " . $customer->id . ")");
         dd($result);
+    }
+
+    public function createWithdrawalOperation(Customer $customer, float $amount) : Transaction
+    {
+
     }
 }
