@@ -15,7 +15,7 @@ class CreateCustomerView extends Migration
     {
         DB::statement('CREATE VIEW customer_view AS
                         SELECT c.id, c.email, c.first_name, c.last_name, c.gender, c.country, 
-                                c.created_at, (cb.balance + cb.bonus) as balance, c.bonus
+                                c.created_at, (cb.balance + cb.bonus) as balance, c.bonus_percent
                         FROM customers AS c
                         INNER JOIN customer_balances as cb ON cb.customer_id = c.id
                         ORDER BY c.id ASC');

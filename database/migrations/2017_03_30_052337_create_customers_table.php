@@ -22,7 +22,7 @@ class CreateCustomersTable extends Migration
             $table->string('first_name', 50);
             $table->string('last_name', 50);
             $table->string('email')->unuqie();
-            $table->integer('bonus');
+            $table->integer('bonus_percent');
             $table->string('country', 2);
             $table->timestamps();
             $table->softDeletes();

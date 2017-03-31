@@ -5,9 +5,9 @@ use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 /**
- * Class CreateCustomerBalanceTable
+ * Class CreateTransactionsTable
  */
-class CreateCustomerBalanceTable extends Migration
+class CreateTransactionsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -16,11 +16,13 @@ class CreateCustomerBalanceTable extends Migration
      */
     public function up()
     {
-        Schema::create('customer_balances', function (Blueprint $table) {
+        Schema::create('transactions', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('customer_id')->unsigned();
-            $table->decimal('balance')->unsigned()->default(0);
-            $table->decimal('bonus')->default(0);
+            $table->string('type', 45)->comment = 'deposit or withdrawal';
+            $table->decimal('amount');
+            $table->string('currency', 3)->default('USD');
+            $table->string('status', 45)->comment = 'pending, complete';
             $table->timestamps();
 
             $table->foreign('customer_id')->references('id')->on('customers');
@@ -34,9 +36,6 @@ class CreateCustomerBalanceTable extends Migration
      */
     public function down()
     {
-        Schema::table('customer_balances', function (Blueprint $table) {
-            $table->dropForeign(['customer_id']);
-        });
-        Schema::drop('customer_balances');
+        Schema::drop('transactions');
     }
 }

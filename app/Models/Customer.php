@@ -14,7 +14,7 @@ class Customer extends Model
     use SoftDeletes;
 
     /** @var array $fillable */
-    protected $fillable = ['gender', 'first_name', 'last_name', 'country', 'email', 'bonus'];
+    protected $fillable = ['gender', 'first_name', 'last_name', 'country', 'email', 'bonus_percent'];
 
     /** @var array $hidden */
     protected $hidden = ['deleted_at']; // temporary hide it from output

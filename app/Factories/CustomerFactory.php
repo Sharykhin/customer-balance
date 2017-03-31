@@ -19,7 +19,7 @@ class CustomerFactory implements CustomerFactoryInterface
     public function newCustomer() : Customer
     {
         $customer = new Customer();
-        $customer->bonus = rand(config('customer.bonus.min'), config('customer.bonus.max'));
+        $customer->bonus_percent = rand(config('customer.bonus.min'), config('customer.bonus.max'));
         return $customer;
     }
 

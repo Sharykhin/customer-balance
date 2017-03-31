@@ -88,7 +88,7 @@ class CustomerController
     public function update($id, CustomerRequest $request) : JsonResponse
     {
         $customer = $this->customerRepository->get($id);
-        $parameters = $request->except('bonus');
+        $parameters = $request->except('bonus_percent');
         $customer = $this->customerRepository->update($customer, $parameters);
         return response()->success($customer);
     }
