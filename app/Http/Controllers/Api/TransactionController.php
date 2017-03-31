@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Exceptions\WithdrawException;
 use App\Http\Requests\TransactionRequest;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
 use App\Interfaces\Repositories\TransactionRepositoryInterface;
@@ -42,7 +43,9 @@ class TransactionController
     {
         $customer = $this->customerRepository->get($id);
 
-        $this->transactionRepository->createDepositOperation($customer, floatval($request->request->get('amount')));
+        $transaction = $this->transactionRepository->createDepositOperation($customer, floatval($request->request->get('amount')));
+
+        return response()->created($transaction);
     }
 
     /**
@@ -54,7 +57,11 @@ class TransactionController
     {
         $customer = $this->customerRepository->get($id);
 
-        $this->transactionRepository->createWithdrawal($customer, floatval($request->request->get('amount')));
+        try {
+            $transaction = $this->transactionRepository->createWithdrawalOperation($customer, floatval($request->request->get('amount')));
+            return response()->created($transaction);
+        } catch (WithdrawException $e) {
+            return response()->badRequest(['amount' => $e->getMessage()]);
+        }
     }
-
 }
