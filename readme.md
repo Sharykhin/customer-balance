@@ -16,3 +16,10 @@ Installation:
 ```bash
 composer install
 ```
+
+2. Make a copy of .env.exmaple to .env
+```bash
+cp .env.example .env
+```
+
+3. Change database configuration according to your system in .env
