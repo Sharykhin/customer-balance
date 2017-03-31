@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Interfaces\Factories\CustomerFactoryInterface;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
 use App\Models\Customer;
+use App\Models\CustomerView;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 /**
@@ -34,7 +35,7 @@ class CustomerRepository implements CustomerRepositoryInterface
      */
     public function all(int $limit, int $offset = 0)
     {
-        return Customer::offset($offset)->limit($limit)->get();
+        return CustomerView::offset($offset)->limit($limit)->get();
     }
 
     /**
@@ -53,6 +54,20 @@ class CustomerRepository implements CustomerRepositoryInterface
     {
         $customer = Customer::find($id);
         if (!$customer instanceof Customer) {
+            throw new ModelNotFoundException('Customer could not be found');
+        }
+
+        return $customer;
+    }
+
+    /**
+     * @param $id
+     * @return CustomerView
+     */
+    public function getWithBalance($id) : CustomerView
+    {
+        $customer = CustomerView::find($id);
+        if (!$customer instanceof CustomerView) {
             throw new ModelNotFoundException('Customer could not be found');
         }
 

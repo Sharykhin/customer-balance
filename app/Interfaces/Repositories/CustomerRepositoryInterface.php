@@ -3,6 +3,7 @@
 namespace App\Interfaces\Repositories;
 
 use App\Models\Customer;
+use App\Models\CustomerView;
 
 /**
  * Interface CustomerRepositoryInterface
@@ -28,6 +29,12 @@ interface CustomerRepositoryInterface
      * @return Customer
      */
     public function get($id) : Customer;
+
+    /**
+     * @param $id
+     * @return CustomerView
+     */
+    public function getWithBalance($id) : CustomerView;
 
     /**
      * @return int

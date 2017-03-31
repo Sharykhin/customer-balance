@@ -16,6 +16,8 @@ class Customer extends Model
     /** @var array $fillable */
     protected $fillable = ['gender', 'first_name', 'last_name', 'country', 'email', 'bonus'];
 
+    /** @var array $hidden */
+    protected $hidden = ['deleted_at']; // temporary hide it from output
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */

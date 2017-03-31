@@ -51,7 +51,11 @@ class Handler extends ExceptionHandler
                 return response()->notFound($exception->getMessage());
             }
             default:
-                return parent::render($request, $exception);
+                if (config('app.debug') === true) {
+                    return parent::render($request, $exception);
+                }
+                return response()->error($exception->getMessage());
+
         }
     }
 

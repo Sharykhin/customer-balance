@@ -53,7 +53,7 @@ class CustomerController
      */
     public function show($id) : JsonResponse
     {
-        $customer = $this->customerRepository->get($id);
+        $customer = $this->customerRepository->getWithBalance($id);
         return response()->success($customer);
     }
 
