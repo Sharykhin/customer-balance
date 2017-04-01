@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use DateTime;
 
 /**
  * Class CustomerSeeder
@@ -21,18 +20,30 @@ class CustomerSeeder extends Seeder
                 'first_name' => 'Cameron',
                 'last_name' => 'Diaz',
                 'gender' => 'female',
-                'bonus' => 5,
+                'bonus_percent' => 5,
                 'country' => 'US',
-                'created_at' => (new DateTime())->format(DateTime::ISO8601)
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ),
             array(
                 'email' => 'brad_pit@mail.com',
                 'first_name' => 'Brad',
                 'last_name' => 'Pit',
                 'gender' => 'male',
-                'bonus' => 10,
+                'bonus_percent' => 10,
                 'country' => 'US',
-                'created_at' => (new DateTime())->format(DateTime::ISO8601)
+                'created_at' => new DateTime(),
+                'updated_at' =>new DateTime()
+            ),
+            array(
+                'email' => 'sergey@mail.com',
+                'first_name' => 'Sergey',
+                'last_name' => 'Sharykhin',
+                'gender' => 'male',
+                'bonus_percent' => 15,
+                'country' => 'BY',
+                'created_at' => new DateTime(),
+                'updated_at' => new DateTime()
             ),
         );
 

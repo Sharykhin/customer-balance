@@ -31,6 +31,24 @@ class TransactionRepository implements TransactionRepositoryInterface
     }
 
     /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    public function all(int $limit, int $offset = 0)
+    {
+        return Transaction::offset($offset)->limit($limit)->get();
+    }
+
+    /**
+     * @return int
+     */
+    public function count() : int
+    {
+        return Transaction::count();
+    }
+
+    /**
      * @param Customer $customer
      * @param float $amount
      * @return Transaction

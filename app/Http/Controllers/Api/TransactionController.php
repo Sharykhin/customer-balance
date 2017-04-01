@@ -7,6 +7,7 @@ use App\Http\Requests\TransactionRequest;
 use App\Interfaces\Repositories\CustomerRepositoryInterface;
 use App\Interfaces\Repositories\TransactionRepositoryInterface;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 /**
  * Class TransactionController
@@ -14,6 +15,8 @@ use Illuminate\Http\JsonResponse;
  */
 class TransactionController
 {
+    const LIMIT = 10;
+
     /** @var CustomerRepositoryInterface $customerRepository */
     protected $customerRepository;
 
@@ -32,6 +35,21 @@ class TransactionController
     {
         $this->customerRepository = $customerRepository;
         $this->transactionRepository = $transactionRepository;
+    }
+
+    /**
+     * @param Request $request
+     * @return JsonResponse
+     */
+    public function index(Request $request) : JsonResponse
+    {
+        $limit = $request->query->get('limit') ?: self::LIMIT;
+        $offset = $request->query->get('offset') ?: 0;
+
+        $transactions = $this->transactionRepository->all($limit, $offset);
+        $total = $this->transactionRepository->count();
+        $count = sizeof($transactions);
+        return response()->success($transactions, compact('total', 'count', 'limit', 'offset'));
     }
 
     /**

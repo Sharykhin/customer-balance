@@ -4,6 +4,9 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
+/**
+ * Class CreateCustomerView
+ */
 class CreateCustomerView extends Migration
 {
     /**
@@ -28,6 +31,6 @@ class CreateCustomerView extends Migration
      */
     public function down()
     {
-        DB::statement("DROP VIEW customer_view");
+        DB::statement('DROP VIEW customer_view');
     }
 }

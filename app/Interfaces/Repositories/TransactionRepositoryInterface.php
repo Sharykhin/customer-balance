@@ -12,6 +12,18 @@ use App\Models\Transaction;
 interface TransactionRepositoryInterface
 {
     /**
+     * @param int $limit
+     * @param int $offset
+     * @return mixed
+     */
+    public function all(int $limit, int $offset = 0);
+
+    /**
+     * @return int
+     */
+    public function count() : int;
+
+    /**
      * @param Customer $customer
      * @param float $amount
      * @return Transaction
