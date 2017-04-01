@@ -22,14 +22,14 @@ class ReportView extends Migration
             SELECT  cr.`date`, 
                     cr.country, 
                     cr.unique_customers,
-                    cr.number AS \'number_of_deposits\', 
-                    cr.total AS \'total_amount_of_deposit\',
-                    cr2.number as `number_of_withdrawal`,
-                    cr2.total as `total_amount_of_withdrawal`
+                    IFNULL(cr.number, 0) AS \'number_of_deposits\', 
+                    IFNULL(cr.total, 0) AS \'total_amount_of_deposit\',
+                    IFNULL(cr2.number,0) as `number_of_withdrawal`,
+                    IFNULL(cr2.total,0) as `total_amount_of_withdrawal`
             from (SELECT * FROM customer_reports WHERE customer_reports.`type` = \'deposit\') as cr
-            inner join (SELECT * FROM customer_reports WHERE customer_reports.`type` = \'withdrawal\') as cr2
+            left join (SELECT * FROM customer_reports WHERE customer_reports.`type` = \'withdrawal\') as cr2
             ON (cr.`date` = cr2.`date` AND cr.`country` = cr2.`country`)
-            ORDER BY cr.`date` DESC;
+            ORDER BY cr.`date`DESC;
             ');
     }
 

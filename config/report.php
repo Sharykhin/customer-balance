@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'default_last_days' => 2
+    'default_last_days' => 7
 ];
