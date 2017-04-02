@@ -49,22 +49,15 @@ class Handler extends ExceptionHandler
     {
         switch ($exception) {
             case ($exception instanceof ModelNotFoundException):
-            {
                 return response()->notFound($exception->getMessage());
-            }
+            case ($exception instanceof ValidationException):
+            case ($exception instanceof HttpResponseException):
+                return $exception->getResponse();
             default:
                 if (config('app.debug') === true) {
                     return parent::render($request, $exception);
                 }
-
-                if ($exception instanceof ValidationException) {
-                    return $exception->getResponse();
-                }
-                if ($exception instanceof HttpResponseException) {
-                    return $exception->getResponse();
-                }
                 return response()->error($exception->getMessage());
-
         }
     }
 

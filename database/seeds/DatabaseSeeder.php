@@ -21,6 +21,7 @@ class DatabaseSeeder extends Seeder
 
         if(app()->environment() === 'testing') {
             $this->call(\Seeds\Testing\CustomerSeeder::class);
+            $this->call(\Seeds\Testing\TransactionSeeder::class);
             $this->call(\Seeds\Testing\CustomerBalanceSeeder::class);
         }
 

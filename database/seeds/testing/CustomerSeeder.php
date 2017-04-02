@@ -18,8 +18,8 @@ class CustomerSeeder extends Seeder
      */
     public function run()
     {
-        $users = array(
-            array(
+        $users = [
+            [
                 'email' => 'cameron_diaz@mail.com',
                 'first_name' => 'Cameron',
                 'last_name' => 'Diaz',
@@ -28,8 +28,8 @@ class CustomerSeeder extends Seeder
                 'country' => 'US',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
-            ),
-            array(
+            ],
+            [
                 'email' => 'brad_pit@mail.com',
                 'first_name' => 'Brad',
                 'last_name' => 'Pit',
@@ -38,8 +38,8 @@ class CustomerSeeder extends Seeder
                 'country' => 'US',
                 'created_at' => new DateTime(),
                 'updated_at' =>new DateTime()
-            ),
-            array(
+            ],
+            [
                 'email' => 'sergey@mail.com',
                 'first_name' => 'Sergey',
                 'last_name' => 'Sharykhin',
@@ -48,8 +48,8 @@ class CustomerSeeder extends Seeder
                 'country' => 'BY',
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
-            ),
-        );
+            ]
+        ];
 
         DB::table('customers')->insert($users);
     }

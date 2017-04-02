@@ -21,22 +21,22 @@ class CustomerBalanceSeeder extends Seeder
     {
         $balances = array(
             array(
-                'bonus' => 20,
-                'balance' => 100,
+                'bonus' => 5,
+                'balance' => 185,
                 'customer_id' => 1,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
             ),
             array(
-                'bonus' => 15,
-                'balance' => 150,
+                'bonus' => 0,
+                'balance' => 200,
                 'customer_id' => 2,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()
             ),
             array(
                 'bonus' => 10,
-                'balance' => 230,
+                'balance' => 260,
                 'customer_id' => 3,
                 'created_at' => new DateTime(),
                 'updated_at' => new DateTime()

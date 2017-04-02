@@ -51,6 +51,16 @@ You should get the following response:
 By default debug mode is enabled and all the database queries will be logged 
 under the property _debug in json response.
 
+Testing:
+-------
+
+For testing api additional test database is required. 
+Fill in appropriate values for test database in .env  
+To run api test use the following command:
+```bash
+./vendor/bin/phpunit tests/Api/
+```
+
 API:
 ----
 All the responses are returned as JSON.  
