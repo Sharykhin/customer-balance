@@ -29,6 +29,11 @@ cp .env.example .env
 php artisan migrate
 ```
 
+5. Run artisan seed command:
+```bash
+php artisan db:seed
+```
+
 Usage:
 ------
 
