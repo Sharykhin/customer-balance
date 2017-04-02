@@ -14,7 +14,15 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-         $this->call(CustomerSeeder::class);
-         $this->call(CustomerBalanceSeeder::class);
+        if(app()->environment() === 'local') {
+            $this->call(\Seeds\Local\CustomerSeeder::class);
+            $this->call(\Seeds\Local\CustomerBalanceSeeder::class);
+        }
+
+        if(app()->environment() === 'testing') {
+            $this->call(\Seeds\Testing\CustomerSeeder::class);
+            $this->call(\Seeds\Testing\CustomerBalanceSeeder::class);
+        }
+
     }
 }

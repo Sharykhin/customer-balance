@@ -1,6 +1,10 @@
 <?php
 
+namespace Seeds\Local;
+
 use Illuminate\Database\Seeder;
+use DateTime;
+use DB;
 
 /**
  * Class CustomerSeeder

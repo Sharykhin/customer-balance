@@ -54,7 +54,7 @@ under the property _debug in json response.
 API:
 ----
 All the responses are returned as JSON.  
-Only application/json header is appropriate
+Only application/json Accept header is appropriate
 
 **Example:**
 
@@ -72,7 +72,9 @@ Only application/json header is appropriate
     "meta": null
   }
   ```
-  
+For body application requires to get json.
+Header Content-Type: application/json is required.
+ 
 Each json response consists of the following keys:
 
 * *success*  - the result of an operation.  
@@ -86,7 +88,7 @@ POST */api/customers* - create a new customer
 **Example**:  
 
 ```bash
-curl -XPOST  http://localhost:8000/api/customers
+curl -XPOST -H "Content-Type:application/json"  http://localhost:8000/api/customers
 ```
 
 JSON input

@@ -6,6 +6,8 @@ use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -53,6 +55,13 @@ class Handler extends ExceptionHandler
             default:
                 if (config('app.debug') === true) {
                     return parent::render($request, $exception);
+                }
+
+                if ($exception instanceof ValidationException) {
+                    return $exception->getResponse();
+                }
+                if ($exception instanceof HttpResponseException) {
+                    return $exception->getResponse();
                 }
                 return response()->error($exception->getMessage());
 
