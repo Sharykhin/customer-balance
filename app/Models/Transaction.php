@@ -10,5 +10,6 @@ use Illuminate\Database\Eloquent\Model;
  */
 class Transaction extends Model
 {
-    protected $fillable = ['id', 'customer_id', 'amount', 'currency', 'status', 'updated_at', 'created_at'];
+    /** @var array $fillable */
+    protected $fillable = ['customer_id', 'amount', 'currency', 'status', 'updated_at', 'created_at'];
 }

@@ -13,5 +13,5 @@ interface TransactionFactoryInterface
     /**
      * @return Transaction
      */
-    public function newTransaction(array $patameters = []) : Transaction;
+    public function newTransaction() : Transaction;
 }

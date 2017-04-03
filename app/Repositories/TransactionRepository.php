@@ -57,7 +57,8 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         $result = DB::select("CALL make_transaction(" . $amount . ", 'USD', 'deposit', " . $customer->id . ")");
 
-        $transaction = $this->transactionFactory->newTransaction((array) $result[0]);
+        $transaction = $this->transactionFactory->newTransaction();
+        $transaction->fill((array) $result[0]);
         return $transaction;
     }
 
@@ -71,7 +72,8 @@ class TransactionRepository implements TransactionRepositoryInterface
     {
         try {
             $result = DB::select("CALL make_transaction(" . $amount . ", 'USD', 'withdrawal', " . $customer->id . ")");
-            $transaction = $this->transactionFactory->newTransaction((array) $result[0]);
+            $transaction = $this->transactionFactory->newTransaction();
+            $transaction->fill((array) $result[0]);
             return $transaction;
         } catch (QueryException $e) {
             if ($e->getCode() === '45000') {

@@ -14,10 +14,9 @@ class TransactionFactory implements TransactionFactoryInterface
     /**
      * @return Transaction
      */
-    public function newTransaction(array $patameters = []) : Transaction
+    public function newTransaction() : Transaction
     {
         $transaction = new Transaction();
-        $transaction->fill($patameters);
         return $transaction;
     }
 }
